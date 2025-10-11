@@ -126,6 +126,13 @@ pilihan_ganda = [
     ]
 ]
 
+score_mapping = {
+    'a' : 1.25,
+    'b' : 1.5,
+    'c' : 1.75,
+    'd' : 1.00
+}
+
 # Jawaban user
 user_ans = []
 for i, s in enumerate(soal):
@@ -133,4 +140,4 @@ for i, s in enumerate(soal):
     for opt in pilihan_ganda[i]:
         print(opt)
     while True:
-        ans = input("Pilih Jawaban Kamu ")
+        ans = input("Pilih Jawaban anda (a/b/c/d) ").lower()
