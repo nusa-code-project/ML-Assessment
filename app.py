@@ -28,6 +28,23 @@ def submit():
                 return jsonify({"error": f"Anda belum mengisi pilihan Nomor {i}"})
             jawaban.append(score_mapping[nilai])
 
-        X = np.array(jawaban).reshape(1,-1)
+        nilai_x = np.array(jawaban).reshape(1,-1)
 
-        prediction =
+        prediction = model.predict_proba(nilai_x)[0]
+        classes = model.classes_
+
+        sorted_indices = np.argsort(prediction)[::-1]
+        tiga_terbaik = [(classes[i], float(prediction[i])) for i in sorted_indices[:3]]
+        return jsonify({
+            "status" : "success",
+            "Top 3 Recommendation" : tiga_terbaik
+        })
+
+    except Exception as e :
+        return jsonify({
+            "status" : "error",
+            "message" : str(e)
+        })
+
+if __name__ == "__main__" :
+    app.run(debug=True)
