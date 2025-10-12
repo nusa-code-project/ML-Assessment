@@ -23,7 +23,7 @@ def submit():
     try :
         jawaban = []
         for i in range(1,16):
-            nilai = request.form.get(f'Nomor {i}')
+            nilai = request.form.get(f'Q{i}')
             if nilai not in score_mapping :
                 return jsonify({"error": f"Anda belum mengisi pilihan Nomor {i}"})
             jawaban.append(score_mapping[nilai])

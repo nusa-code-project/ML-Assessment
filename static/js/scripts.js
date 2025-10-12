@@ -1,17 +1,19 @@
-document.getElementById('quizform').addEventListener('submit', function(e) {
-        e.preventDefault();
+<script>
+document.getElementById('quizForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-        const formData = new FormData(this);
+    const formData = new FormData(this);
 
+    try {
         const response = await fetch('/submit', {
-            method : 'POST',
-            body : formData
+            method: 'POST',
+            body: formData
         });
 
         const result = await response.json();
 
         if (result.status === 'success') {
-            const tiga_terbaik = new tiga_terbaik;
+            const tiga_terbaik = result.tiga_terbaik;
 
             let message = "Top 3 Rekomendasi Learning Path Kamu:\n\n";
             tiga_terbaik.forEach((item, index) => {
@@ -22,4 +24,8 @@ document.getElementById('quizform').addEventListener('submit', function(e) {
         } else {
             alert('Error: ' + result.message);
         }
-  });
+    } catch (err) {
+        alert('Terjadi kesalahan: ' + err.message);
+    }
+});
+</script>

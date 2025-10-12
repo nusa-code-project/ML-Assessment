@@ -2,119 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NusaCode Assessment Score</title>
+    <title>Hasil Rekomendasi</title>
     <style>
-        :root {
-            --bg: #f6f8fb;
-            --card: #ffffff;
-            --accent: #2563eb;
-            --accent-600: #1e40af;
-            --text: #0f172a;
-            --muted: #6b7280;
-            --radius: 12px;
-            --shadow: 0 6px 20px rgba(16,24,40,0.06);
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-        }
-
         body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(180deg, var(--bg), #ffffff 60%);
-            color: var(--text);
-        }
-
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 30px 40px;
+            font-family: Inter, sans-serif;
+            background: #f6f8fb;
             text-align: center;
-            max-width: 420px;
-            width: 90%;
-            border: 1px solid rgba(15,23,42,0.05);
+            padding: 40px;
         }
-
-        h4 {
-            margin: 0 0 10px 0;
-            font-size: 1.4rem;
-            color: var(--accent-600);
+        .card {
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
-
-        p {
-            font-size: 1rem;
-            margin: 10px 0 24px 0;
-        }
-
-        strong {
-            color: var(--accent);
-            font-size: 1.05rem;
-        }
-
+        h2 { color: #2563eb; }
         ul {
             list-style: none;
             padding: 0;
-            margin: 10px 0 24px 0;
-            color: var(--muted);
         }
-
-        li {
-            margin: 6px 0;
-            font-size: 0.95rem;
-        }
-
+        li { margin: 6px 0; }
         a {
             display: inline-block;
+            margin-top: 20px;
             text-decoration: none;
-            background: var(--accent);
+            background: #2563eb;
             color: #fff;
-            padding: 10px 18px;
+            padding: 10px 16px;
             border-radius: 8px;
-            font-weight: 600;
-            transition: background 0.12s, transform 0.12s;
-            box-shadow: 0 6px 14px rgba(37,99,235,0.16);
-        }
-
-        a:hover {
-            background: var(--accent-600);
-            transform: translateY(-2px);
-        }
-
-        a:active {
-            transform: translateY(0);
-        }
-
-        @media (max-width: 480px) {
-            .card {
-                padding: 24px;
-            }
-            h4 {
-                font-size: 1.2rem;
-            }
-            a {
-                width: 100%;
-                text-align: center;
-            }
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h4>Assessment NusaCode</h4>
-        <p>Rekomendasi Learning Path: <strong>{{ learning_path }}</strong></p>
+        <h2>Rekomendasi Path Kamu:</h2>
+        <h3>{{ learning_path }}</h3>
 
-        {% if top3 %}
-        <h5>Top 3 Rekomendasi:</h5>
+        <p>Top 3 Hasil Prediksi:</p>
         <ul>
-            {% for name, score in top3 %}
-            <li>{{ loop.index }}. {{ name }} — {{ score }}%</li>
+            {% for nama, nilai in tiga_terbaik %}
+                <li>{{ nama }} — {{ nilai }}%</li>
             {% endfor %}
         </ul>
-        {% endif %}
 
-        <a href="/">Back</a>
+        <a href="/">Ulangi Tes</a>
     </div>
 </body>
 </html>
