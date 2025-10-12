@@ -34,17 +34,20 @@ def submit():
         classes = model.classes_
 
         sorted_indices = np.argsort(prediction)[::-1]
-        tiga_terbaik = [(classes[i], float(prediction[i])) for i in sorted_indices[:3]]
-        return jsonify({
-            "status" : "success",
-            "Top 3 Recommendation" : tiga_terbaik
-        })
+        tiga_terbaik = [(classes[i], round(float(prediction[i]))) for i in sorted_indices[:3]]
+
+        learning_path = tiga_terbaik[0][0]
+        return render_template(
+            'result.html',
+            learning_path=learning_path,
+            tiga_terbaik = tiga_terbaik
+        )
 
     except Exception as e :
-        return jsonify({
-            "status" : "error",
-            "message" : str(e)
-        })
+        return render_template(
+            'result.html',
+            learning_path=f"Terjadi kesalahan: {str(e)}"
+        )
 
 if __name__ == "__main__" :
     app.run(debug=True)
