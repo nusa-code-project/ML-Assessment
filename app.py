@@ -15,7 +15,7 @@ score_mapping = {
 
 @app.route('/')
 def home() :
-    return render_template('./template/question.html')
+    return render_template('question.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
