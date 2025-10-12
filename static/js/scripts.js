@@ -17,7 +17,7 @@ document.getElementById('quizForm').addEventListener('submit', async function(e)
                     });
                     alert(message);
                 } else {
-                    alert('Gagal memproses hasil quiz.');
+                    alert('Gagal memproses hasil Assessment.');
                 }
             } catch (error) {
                 console.error(error);
