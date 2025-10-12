@@ -2,48 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hasil Rekomendasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NusaCode Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --accent: #2563eb;
+            --accent-dark: #1e3a8a;
+            --muted: #6b7280;
+            --radius: 20px;
+        }
+
         body {
-            font-family: Inter, sans-serif;
-            background: #f6f8fb;
-            text-align: center;
-            padding: 40px;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
         }
+
         .card {
-            background: #fff;
+            background-color: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
             max-width: 500px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out;
         }
-        h2 { color: #2563eb; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 6px 0; }
-        a {
+
+        h1 {
+            color: var(--accent-dark);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .result {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .result:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .prob {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.3rem;
+        }
+
+        .btn {
+            margin-top: 2rem;
             display: inline-block;
-            margin-top: 20px;
+            background-color: var(--accent);
+            color: white;
             text-decoration: none;
-            background: #2563eb;
-            color: #fff;
-            padding: 10px 16px;
-            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-dark);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 2rem 1.5rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h2>Rekomendasi Learning Path Kamu:</h2>
+        <h1>✨ Hasil Assessment Kamu</h1>
+        <p class="subtitle">Tiga rekomendasi Learning Path terbaik untuk kamu:</p>
 
-        <p>Top 3 Hasil Prediksi:</p>
-        <ul>
-            {% for nama, nilai in tiga_terbaik %}
-                <li>{{ nama }} — {{ nilai }}%</li>
-            {% endfor %}
-        </ul>
+        {% for hasil in tiga_terbaik %}
+        <div class="result">
+            {{ hasil.path }}
+            <div class="prob">{{ hasil.prob }}</div>
+        </div>
+        {% endfor %}
 
-        <a href="/">Ulangi Tes</a>
+        <a href="/" class="btn">Ulangi Assessment</a>
     </div>
 </body>
 </html>

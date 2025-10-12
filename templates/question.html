@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NusaCode Assessment</title>
+    <title>AI Learning Path Assessment</title>
     <style>
-        /* CSS dari versi sebelumnya, tetap sama */
         :root{
             --bg: #f6f8fb;
             --card: #ffffff;
@@ -26,8 +25,6 @@
             margin:0;
             background: linear-gradient(180deg, var(--bg), #ffffff 60%);
             color:var(--text);
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
             font-size:16px;
             line-height:1.45;
         }
@@ -42,7 +39,6 @@
         h1{
             margin:0 0 18px 0;
             font-size:1.6rem;
-            letter-spacing:-0.2px;
             color:var(--accent-600);
         }
 
@@ -82,7 +78,6 @@
             padding:10px 12px;
             border-radius:8px;
             cursor:pointer;
-            user-select:none;
             font-size:0.95rem;
             transition: background 0.12s, transform 0.06s;
             border:1px solid rgba(15,23,42,0.04);
@@ -140,10 +135,9 @@
 </head>
 <body>
 <div class="container">
-    <h1>NusaCode Assessment</h1>
-    <form id="quizForm" action="/submit" method="post">
-
-        <div class="soal">
+    <h1>AI Learning Path Assessment</h1>
+    <form id="quizForm" method="post" action="/submit">
+        <div class="soal" id="Q1">
             <p>1. Kamu buka website dan tampilannya berantakan, loading-nya juga lama. Hal pertama yang kamu pikirin apa?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q1" value="a">a. Pasti ada yang salah di struktur kodenya.</label>
@@ -154,7 +148,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q2">
             <p>2. Kalau kamu diminta bikin tombol “Login”, hal paling penting yang bakal kamu pikirin apa?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q2" value="a">a. Pastikan tampilannya rapi dan bisa dipakai semua orang.</label>
@@ -165,7 +159,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q3">
             <p>3. Suatu hari data penjualan naik dua kali lipat, tapi besoknya langsung turun. Reaksi kamu apa?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q3" value="a">a. Cek dulu sistem atau kodenya, takutnya error.</label>
@@ -176,7 +170,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q4">
             <p>4. Kamu kerja bareng tim dari berbagai bidang. Bagian mana yang paling kamu pengen pegang?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q4" value="a">a. Bagian teknis dan struktur sistem.</label>
@@ -187,7 +181,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q5">
             <p>5. Ada bug yang cuma muncul kalau user ngelakuin urutan langkah tertentu. Cara kamu nyari penyebabnya gimana?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q5" value="a">a. Lacak satu-satu urutan fungsi yang jalan.</label>
@@ -198,7 +192,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q6">
             <p>6. Antara tugas kreatif efek kecil dan tugas teknis dampak besar, mana yang kamu pilih?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q6" value="a">a. Yang teknis dulu, biar langsung keliatan hasilnya.</label>
@@ -209,7 +203,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q7">
             <p>7. Kamu disuruh milih antara ngerapihin semua kode dari awal biar lebih bersih atau memperbaiki bug kecil yang sering muncul. Kamu bakal...</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q7" value="a">a. Rapihin semua kode biar jangka panjangnya aman.</label>
@@ -220,7 +214,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q8">
             <p>8. User bilang fitur “Cari Kursus” susah dipakai. Apa langkah pertama kamu?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q8" value="a">a. Cek dulu kodenya, mungkin logikanya belum optimal.</label>
@@ -231,7 +225,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q9">
             <p>9. Kalau kerja bareng tim, kamu lebih suka dapet tugas yang...</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q9" value="a">a. Butuh logika dan struktur yang jelas.</label>
@@ -242,7 +236,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q10">
             <p>10. Kamu lagi ngolah data dan nemu beberapa bagian kosong. Kamu bakal ngapain?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q10" value="a">a. Tambah validasi biar data kosong nggak kejadian lagi.</label>
@@ -253,7 +247,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q11">
             <p>11. Kamu disuruh redesign tampilan halaman kursus biar lebih menarik. Langkah pertamamu apa?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q11" value="a">a. Cari referensi desain lain buat dapet ide layout.</label>
@@ -264,7 +258,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q12">
             <p>12. Cara berpikirmu lebih sering kayak gini...</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q12" value="a">a. “Gimana caranya biar sistem ini jalan cepat dan efisien?”</label>
@@ -275,7 +269,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q13">
             <p>13. Data nunjukin 60% user batal pas mau bayar kursus. Menurut kamu langkah paling tepat pertama kali apa?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q13" value="a">a. Optimasi kecepatan halaman biar nggak lemot.</label>
@@ -286,7 +280,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q14">
             <p>14. Fitur baru yang kamu buat bisa ningkatin engagement user, tapi biaya server-nya tinggi banget. Apa yang bakal kamu lakuin?</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q14" value="a">a. Tetap jalanin, yang penting fiturnya keren.</label>
@@ -297,7 +291,7 @@
         </div>
 
 
-        <div class="soal">
+        <div class="soal" id="Q15">
             <p>15. Kamu paling puas kalau hasil kerja kamu...</p>
             <div class="pilihan">
                 <label><input type="radio" name="Q15" value="a">a. Berfungsi lancar tanpa error.</label>
@@ -310,6 +304,7 @@
         <button type="submit">Submit</button>
     </form>
 </div>
+
 <script src="/static/js/scripts.js"></script>
 </body>
 </html>
