@@ -3,348 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <title>NusaCode Assessment</title>
-    <!-- taruh ini di <head> sebelum </head> -->
-<style>
-  :root{
-    --bg: #f6f8fb;
-    --card: #ffffff;
-    --muted: #6b7280;
-    --accent: #2563eb;
-    --accent-600: #1e40af;
-    --success: #10b981;
-    --danger: #ef4444;
-    --radius: 12px;
-    --max-width: 920px;
-    --gap: 1rem;
-    --text: #0f172a;
-    --shadow: 0 6px 20px rgba(16,24,40,0.06);
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
+    <style>
+        /* CSS dari versi sebelumnya, tetap sama */
+        :root{
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --accent: #2563eb;
+            --accent-600: #1e40af;
+            --success: #10b981;
+            --danger: #ef4444;
+            --radius: 12px;
+            --max-width: 920px;
+            --gap: 1rem;
+            --text: #0f172a;
+            --shadow: 0 6px 20px rgba(16,24,40,0.06);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
 
-  /* Page */
-  html,body{
-    height:100%;
-    margin:0;
-    background: linear-gradient(180deg, var(--bg), #ffffff 60%);
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    font-size:16px;
-    line-height:1.45;
-  }
+        html,body{
+            height:100%;
+            margin:0;
+            background: linear-gradient(180deg, var(--bg), #ffffff 60%);
+            color:var(--text);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            font-size:16px;
+            line-height:1.45;
+        }
 
-  .container{
-    max-width:var(--max-width);
-    margin:32px auto;
-    padding:24px;
-    box-sizing:border-box;
-  }
+        .container{
+            max-width:var(--max-width);
+            margin:32px auto;
+            padding:24px;
+            box-sizing:border-box;
+        }
 
-  h1{
-    margin:0 0 18px 0;
-    font-size:1.6rem;
-    letter-spacing:-0.2px;
-    color:var(--accent-600);
-  }
+        h1{
+            margin:0 0 18px 0;
+            font-size:1.6rem;
+            letter-spacing:-0.2px;
+            color:var(--accent-600);
+        }
 
-  form#quizForm{
-    background:var(--card);
-    border-radius:calc(var(--radius) - 2px);
-    padding:20px;
-    box-shadow:var(--shadow);
-    border:1px solid rgba(15,23,42,0.04);
-  }
+        form#quizForm{
+            background:var(--card);
+            border-radius:calc(var(--radius) - 2px);
+            padding:20px;
+            box-shadow:var(--shadow);
+            border:1px solid rgba(15,23,42,0.04);
+        }
 
-  /* soal (question) card */
-  .soal{
-    border-radius:10px;
-    padding:14px;
-    margin-bottom:14px;
-    background: linear-gradient(180deg, rgba(37,99,235,0.02), transparent);
-    border:1px solid rgba(37,99,235,0.04);
-  }
+        .soal{
+            border-radius:10px;
+            padding:14px;
+            margin-bottom:14px;
+            background: linear-gradient(180deg, rgba(37,99,235,0.02), transparent);
+            border:1px solid rgba(37,99,235,0.04);
+        }
 
-  .soal p{
-    margin:0 0 10px 0;
-    font-weight:600;
-    color:var(--text);
-    font-size:0.98rem;
-  }
+        .soal p{
+            margin:0 0 10px 0;
+            font-weight:600;
+            color:var(--text);
+            font-size:0.98rem;
+        }
 
-  .pilihan{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-  }
+        .pilihan{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
 
-  /* label acts like a button for each choice */
-  .pilihan label{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:10px 12px;
-    border-radius:8px;
-    cursor:pointer;
-    user-select:none;
-    font-size:0.95rem;
-    transition: background 0.12s, transform 0.06s;
-    border:1px solid rgba(15,23,42,0.04);
-    background:transparent;
-  }
+        .pilihan label{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:10px 12px;
+            border-radius:8px;
+            cursor:pointer;
+            user-select:none;
+            font-size:0.95rem;
+            transition: background 0.12s, transform 0.06s;
+            border:1px solid rgba(15,23,42,0.04);
+            background:transparent;
+        }
 
-  /* hover & active */
-  .pilihan label:hover{
-    background:rgba(37,99,235,0.04);
-    transform:translateY(-1px);
-  }
+        .pilihan label:hover{
+            background:rgba(37,99,235,0.04);
+            transform:translateY(-1px);
+        }
 
-  /* radio input styling - keep native for accessibility but space it nicely */
-  .pilihan input[type="radio"]{
-    width:18px;
-    height:18px;
-    flex:0 0 18px;
-    accent-color: var(--accent);
-  }
+        .pilihan input[type="radio"]{
+            width:18px;
+            height:18px;
+            flex:0 0 18px;
+            accent-color: var(--accent);
+        }
 
-  /* Visual selected state when radio checked */
-  .pilihan input[type="radio"]:checked + * { /* DOES NOT WORK in all markup structures; keep fallback below */ }
+        .pilihan label:has(input[type="radio"]:checked){
+            background: linear-gradient(90deg, rgba(37,99,235,0.06), rgba(16,185,129,0.02));
+            border-color: rgba(37,99,235,0.18);
+        }
 
-  /* Make sure the whole label gets focus when keyboard navigating */
-  .pilihan input[type="radio"]:focus{
-    outline:3px solid rgba(37,99,235,0.18);
-    outline-offset:3px;
-    border-radius:6px;
-  }
+        button[type="submit"]{
+            display:inline-block;
+            margin-top:8px;
+            padding:12px 18px;
+            border-radius:10px;
+            border:0;
+            background:var(--accent);
+            color:#fff;
+            font-weight:600;
+            font-size:1rem;
+            cursor:pointer;
+            box-shadow: 0 10px 24px rgba(37,99,235,0.12);
+            transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+        }
 
-  /* If your markup places input inside label (as in your HTML), use this for visual selected state */
-  .pilihan label:has(input[type="radio"]:checked){
-    background: linear-gradient(90deg, rgba(37,99,235,0.06), rgba(16,185,129,0.02));
-    border-color: rgba(37,99,235,0.18);
-  }
+        button[type="submit"]:hover{
+            transform:translateY(-2px);
+            background:var(--accent-600);
+        }
 
-  /* small helper for mislabeled inputs */
-  .pilihan label input[type="radio"] + span {
-    /* If you wrap option text in span (optional), this helps spacing */
-  }
+        button[type="submit"]:active{
+            transform:translateY(0);
+            box-shadow: 0 6px 16px rgba(16,24,40,0.06);
+        }
 
-  /* submit button */
-  button[type="submit"]{
-    display:inline-block;
-    margin-top:8px;
-    padding:12px 18px;
-    border-radius:10px;
-    border:0;
-    background:var(--accent);
-    color:#fff;
-    font-weight:600;
-    font-size:1rem;
-    cursor:pointer;
-    box-shadow: 0 10px 24px rgba(37,99,235,0.12);
-    transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
-  }
-
-  button[type="submit"]:hover{
-    transform:translateY(-2px);
-    background:var(--accent-600);
-  }
-
-  button[type="submit"]:active{
-    transform:translateY(0);
-    box-shadow: 0 6px 16px rgba(16,24,40,0.06);
-  }
-
-  /* small muted helper text (if needed) */
-  .muted{
-    color:var(--muted);
-    font-size:0.9rem;
-  }
-
-  /* responsive adjustments */
-  @media (min-width: 760px){
-    .pilihan{
-      gap:10px;
-    }
-    .soal{
-      padding:16px;
-    }
-    h1{ font-size:1.9rem; }
-    form#quizForm{ padding:28px; }
-  }
-
-  /* very small screens */
-  @media (max-width:420px){
-    .container{ padding:16px; }
-    .pilihan label{ padding:8px 10px; font-size:0.92rem; gap:10px; }
-    button[type="submit"]{ width:100%; padding:12px; }
-  }
-
-  /* accessibility: reduce motion */
-  @media (prefers-reduced-motion: reduce){
-    *{ transition: none !important; animation: none !important; transform: none !important; }
-  }
-</style>
-
+        @media (max-width:420px){
+            .container{ padding:16px; }
+            .pilihan label{ padding:8px 10px; font-size:0.92rem; gap:10px; }
+            button[type="submit"]{ width:100%; padding:12px; }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>NusaCode Assessment</h1>
-        <form id="quizForm">
+<div class="container">
+    <h1>NusaCode Assessment</h1>
+    <form id="quizForm" action="/submit" method="post">
 
-            <div class="soal">
-                <p>1. Kamu buka website dan tampilannya berantakan, loading-nya juga lama. Hal pertama yang kamu pikirin apa?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q1" value="a">a. Pasti ada yang salah di struktur kodenya.</label>
-                    <label><input type="radio" name="Q1" value="b">b. Mungkin jaringan atau device aku yang lemot</label>
-                    <label><input type="radio" name="Q1" value="c">c. Pengen tahu berapa banyak orang lain yang ngalamin hal yang sama.</label>
-                    <label><input type="radio" name="Q1" value="d"> d. Desain dan alurnya emang kurang nyaman buat user.</label>
-                </div>
+        <div class="soal">
+            <p>1. Kamu buka website dan tampilannya berantakan, loading-nya juga lama. Hal pertama yang kamu pikirin apa?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q1" value="a">a. Pasti ada yang salah di struktur kodenya.</label>
+                <label><input type="radio" name="Q1" value="b">b. Mungkin jaringan atau device aku yang lemot</label>
+                <label><input type="radio" name="Q1" value="c">c. Pengen tahu berapa banyak orang lain yang ngalamin hal yang sama.</label>
+                <label><input type="radio" name="Q1" value="d">d. Desain dan alurnya emang kurang nyaman buat user.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>2. Kalau kamu diminta bikin tombol “Login”, hal paling penting yang bakal kamu pikirin apa?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q2" value="a">a. Pastikan tampilannya rapi dan bisa dipakai semua orang.</label>
-                    <label><input type="radio" name="Q2" value="b">b. Harus bisa jalan di semua device tanpa bug.</label>
-                    <label><input type="radio" name="Q3" value="c">c. Data login-nya harus aman dan terukur.</label>
-                    <label><input type="radio" name="Q2" value="d">d. Flow-nya jangan bikin user bingung pas login.</label>
-                </div>
+
+        <div class="soal">
+            <p>2. Kalau kamu diminta bikin tombol “Login”, hal paling penting yang bakal kamu pikirin apa?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q2" value="a">a. Pastikan tampilannya rapi dan bisa dipakai semua orang.</label>
+                <label><input type="radio" name="Q2" value="b">b. Harus bisa jalan di semua device tanpa bug.</label>
+                <label><input type="radio" name="Q2" value="c">c. Data login-nya harus aman dan terukur.</label>
+                <label><input type="radio" name="Q2" value="d">d. Flow-nya jangan bikin user bingung pas login.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>3. Suatu hari data penjualan naik dua kali lipat, tapi besoknya langsung turun. Reaksi kamu apa?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q3" value="a">a. Cek dulu sistem atau kodenya, takutnya error.</label>
-                    <label><input type="radio" name="Q3" value="b">b. Mungkin ada promo harian yang udah selesai. </label>
-                    <label> <input type="radio" name="Q3" value="c">c. Coba analisis datanya, bisa jadi hasilnya belum akurat.</label>
-                    <label> <input type="radio" name="Q3" id="d"> d. Bisa jadi user salah paham sama promonya</label>
-                </div>
+
+        <div class="soal">
+            <p>3. Suatu hari data penjualan naik dua kali lipat, tapi besoknya langsung turun. Reaksi kamu apa?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q3" value="a">a. Cek dulu sistem atau kodenya, takutnya error.</label>
+                <label><input type="radio" name="Q3" value="b">b. Mungkin ada promo harian yang udah selesai.</label>
+                <label><input type="radio" name="Q3" value="c">c. Coba analisis datanya, bisa jadi hasilnya belum akurat.</label>
+                <label><input type="radio" name="Q3" value="d">d. Bisa jadi user salah paham sama promonya.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p> 4. Kamu kerja bareng tim dari berbagai bidang. Bagian mana yang paling kamu pengen pegang? </p>
-                <div class="pilihan">
-                    <label> <input type="radio" name="Q4" value="a">a. Bagian teknis dan struktur sistem.</label>
-                    <label> <input type="radio" name="Q4" value="b"> b. Bikin fitur biar bisa dipakai di berbagai perangkat.</label>
-                    <label> <input type="radio" name="Q4" value="c"> c. Analisis performa dan data hasil kerja tim.</label>
-                    <label> <input type="radio" name="Q4" value="d"> d. Ngatur alur produk biar sesuai kebutuhan user dan bisnis. </label>
-                </div>
+
+        <div class="soal">
+            <p>4. Kamu kerja bareng tim dari berbagai bidang. Bagian mana yang paling kamu pengen pegang?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q4" value="a">a. Bagian teknis dan struktur sistem.</label>
+                <label><input type="radio" name="Q4" value="b">b. Bikin fitur biar bisa dipakai di berbagai perangkat.</label>
+                <label><input type="radio" name="Q4" value="c">c. Analisis performa dan data hasil kerja tim.</label>
+                <label><input type="radio" name="Q4" value="d">d. Ngatur alur produk biar sesuai kebutuhan user dan bisnis.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>5. Ada bug yang cuma muncul kalau user ngelakuin urutan langkah tertentu. Cara kamu nyari penyebabnya gimana?</p>
-                <div class="pilihan">
-                    <label> <input type="radio" name="Q5" value="a">a. Lacak satu-satu urutan fungsi yang jalan</label>
-                    <label> <input type="radio" name="Q5" value="b"> b. Coba langsung di beberapa device. </label>
-                    <label> <input type="radio" name="Q5" value="c"> c. Analisis log atau data aktivitas user. </label>
-                    <label> <input type="radio" name="Q5" value="d"> d. Uji pengalaman user buat tahu di langkah mana mereka kesulitan. </label>
-                </div>
+
+        <div class="soal">
+            <p>5. Ada bug yang cuma muncul kalau user ngelakuin urutan langkah tertentu. Cara kamu nyari penyebabnya gimana?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q5" value="a">a. Lacak satu-satu urutan fungsi yang jalan.</label>
+                <label><input type="radio" name="Q5" value="b">b. Coba langsung di beberapa device.</label>
+                <label><input type="radio" name="Q5" value="c">c. Analisis log atau data aktivitas user.</label>
+                <label><input type="radio" name="Q5" value="d">d. Uji pengalaman user buat tahu di langkah mana mereka kesulitan.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>6. Antara tugas kreatif efek kecil dan tugas teknis dampak besar, mana yang kamu pilih?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q6" value="a"> a. Yang teknis dulu, biar langsung keliatan hasilnya.</label>
-                    <label><input type="radio" name="Q6" value="b"> b. Yang kreatif, soalnya lebih seru dan fleksibel.</label>
-                    <label><input type="radio" name="Q6" value="c">  c. Lihat mana yang paling efisien dari waktu dan hasil.</label>
-                    <label><input type="radio" name="Q6" value="d"> d. Pilih yang paling ngaruh ke user dan tujuan bisnis. </label>
-                </div>
+
+        <div class="soal">
+            <p>6. Antara tugas kreatif efek kecil dan tugas teknis dampak besar, mana yang kamu pilih?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q6" value="a">a. Yang teknis dulu, biar langsung keliatan hasilnya.</label>
+                <label><input type="radio" name="Q6" value="b">b. Yang kreatif, soalnya lebih seru dan fleksibel.</label>
+                <label><input type="radio" name="Q6" value="c">c. Lihat mana yang paling efisien dari waktu dan hasil.</label>
+                <label><input type="radio" name="Q6" value="d">d. Pilih yang paling ngaruh ke user dan tujuan bisnis.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p> 7. Kamu disuruh milih antara ngerapihin semua kode dari awal biar lebih bersih atau memperbaiki bug kecil yang sering muncul. Kamu bakal...</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q7" value="a">a. Rapihin semua kode biar jangka panjangnya aman.</label>
-                    <label><input type="radio" name="Q7" value="b">b. Fokus ke bug kecil dulu biar sistem tetap stabil.</label>
-                    <label><input type="radio" name="Q7" value="c">c. Cek data error buat tahu mana yang paling sering muncul.</label>
-                    <label><input type="radio" name="Q7" value="d">d. Lihat bug mana yang paling ganggu user dulu baru perbaiki.</label>
-                </div>
+
+        <div class="soal">
+            <p>7. Kamu disuruh milih antara ngerapihin semua kode dari awal biar lebih bersih atau memperbaiki bug kecil yang sering muncul. Kamu bakal...</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q7" value="a">a. Rapihin semua kode biar jangka panjangnya aman.</label>
+                <label><input type="radio" name="Q7" value="b">b. Fokus ke bug kecil dulu biar sistem tetap stabil.</label>
+                <label><input type="radio" name="Q7" value="c">c. Cek data error buat tahu mana yang paling sering muncul.</label>
+                <label><input type="radio" name="Q7" value="d">d. Lihat bug mana yang paling ganggu user dulu baru perbaiki.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p> 8. User bilang fitur “Cari Kursus” susah dipakai. Apa langkah pertama kamu? </p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q8" value="a"> a. Cek dulu kodenya, mungkin logikanya belum optimal.</label>
-                    <label><input type="radio" name="Q8" value="b">b. Tes tampilan di HP dan laptop, siapa tahu tampilannya beda.</label>
-                    <label><input type="radio" name="Q8" value="c"> c. Analisis data pencarian buat tahu bagian mana yang sering gagal.</label>
-                    <label><input type="radio" name="Q8" value="d">d. Lakukan uji coba langsung sama user buat tahu bagian mana yang bikin bingung.</label>
-                </div>
+
+        <div class="soal">
+            <p>8. User bilang fitur “Cari Kursus” susah dipakai. Apa langkah pertama kamu?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q8" value="a">a. Cek dulu kodenya, mungkin logikanya belum optimal.</label>
+                <label><input type="radio" name="Q8" value="b">b. Tes tampilan di HP dan laptop, siapa tahu tampilannya beda.</label>
+                <label><input type="radio" name="Q8" value="c">c. Analisis data pencarian buat tahu bagian mana yang sering gagal.</label>
+                <label><input type="radio" name="Q8" value="d">d. Lakukan uji coba langsung sama user buat tahu bagian mana yang bikin bingung.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p> 9. Kalau kerja bareng tim, kamu lebih suka dapet tugas yang... </p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q9" value="a">a. Butuh logika dan struktur yang jelas.</label>
-                    <label><input type="radio" name="Q9" value="b">b. Bisa langsung dicoba dan dilihat hasilnya. </label>
-                    <label><input type="radio" name="Q9" value="c"> c. Perlu analisis angka dan data buat ambil keputusan.</label>
-                    <label><input type="radio" name="Q9" value="d">d. Melibatkan ide, strategi, dan diskusi bareng orang lain.</label>
-                </div>
+
+        <div class="soal">
+            <p>9. Kalau kerja bareng tim, kamu lebih suka dapet tugas yang...</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q9" value="a">a. Butuh logika dan struktur yang jelas.</label>
+                <label><input type="radio" name="Q9" value="b">b. Bisa langsung dicoba dan dilihat hasilnya.</label>
+                <label><input type="radio" name="Q9" value="c">c. Perlu analisis angka dan data buat ambil keputusan.</label>
+                <label><input type="radio" name="Q9" value="d">d. Melibatkan ide, strategi, dan diskusi bareng orang lain.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>10. Kamu lagi ngolah data dan nemu beberapa bagian kosong. Kamu bakal ngapain?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q10" value="a">a. Tambah validasi biar data kosong nggak kejadian lagi.</label>
-                    <label><input type="radio" name="Q10" value="b"> b. Coba isi pakai data serupa yang udah ada</label>
-                    <label><input type="radio" name="Q10" value="c">c. Analisis dulu kenapa bisa kosong, baru putusin mau hapus atau isi.</label>
-                    <label><input type="radio" name="Q10" value="d">d. Tanya tim produk apakah data kosong itu ngaruh ke keputusan user.</label>
-                </div>
+
+        <div class="soal">
+            <p>10. Kamu lagi ngolah data dan nemu beberapa bagian kosong. Kamu bakal ngapain?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q10" value="a">a. Tambah validasi biar data kosong nggak kejadian lagi.</label>
+                <label><input type="radio" name="Q10" value="b">b. Coba isi pakai data serupa yang udah ada.</label>
+                <label><input type="radio" name="Q10" value="c">c. Analisis dulu kenapa bisa kosong, baru putusin mau hapus atau isi.</label>
+                <label><input type="radio" name="Q10" value="d">d. Tanya tim produk apakah data kosong itu ngaruh ke keputusan user.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>11. Kamu disuruh redesign tampilan halaman kursus biar lebih menarik. Langkah pertamamu apa?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q11" value="a">a. Cari referensi desain lain buat dapet ide layout.</label>
-                    <label><input type="radio" name="Q11" value="b">b. Tes tampilan di berbagai ukuran layar biar responsif.</label>
-                    <label><input type="radio" name="Q11" value="c">c. Analisis bagian mana yang paling sering di-skip sama user.</label>
-                    <label><input type="radio" name="Q11" value="d">d. Tanya user langsung bagian mana yang menurut mereka bikin ribet.</label>
-                </div>
+
+        <div class="soal">
+            <p>11. Kamu disuruh redesign tampilan halaman kursus biar lebih menarik. Langkah pertamamu apa?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q11" value="a">a. Cari referensi desain lain buat dapet ide layout.</label>
+                <label><input type="radio" name="Q11" value="b">b. Tes tampilan di berbagai ukuran layar biar responsif.</label>
+                <label><input type="radio" name="Q11" value="c">c. Analisis bagian mana yang paling sering di-skip sama user.</label>
+                <label><input type="radio" name="Q11" value="d">d. Tanya user langsung bagian mana yang menurut mereka bikin ribet.</label>
             </div>
+        </div>
 
-            <div class = "soal">
-                <p>12. Cara berpikirmu lebih sering kayak gini...</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q12" value="a">a. “Gimana caranya biar sistem ini jalan cepat dan efisien?”</label>
-                    <label><input type="radio" name="Q12" value="b">b. “Gimana biar hasilnya bisa dipakai di semua perangkat?”</label>
-                    <label><input type="radio" name="Q12" value="c">c. “Apa insight yang bisa aku ambil dari data ini?”</label>
-                    <label><input type="radio" name="Q12" value="d">d. “Apakah fitur ini bener-bener penting buat user dan bisnis?”</label>
-                </div>
+
+        <div class="soal">
+            <p>12. Cara berpikirmu lebih sering kayak gini...</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q12" value="a">a. “Gimana caranya biar sistem ini jalan cepat dan efisien?”</label>
+                <label><input type="radio" name="Q12" value="b">b. “Gimana biar hasilnya bisa dipakai di semua perangkat?”</label>
+                <label><input type="radio" name="Q12" value="c">c. “Apa insight yang bisa aku ambil dari data ini?”</label>
+                <label><input type="radio" name="Q12" value="d">d. “Apakah fitur ini bener-bener penting buat user dan bisnis?”</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>13. Data nunjukin 60% user batal pas mau bayar kursus. Menurut kamu langkah paling tepat pertama kali apa?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q13" value="a">a. Optimasi kecepatan halaman biar nggak lemot.</label>
-                    <label><input type="radio" name="Q13" value="b">b. Tes tampilan di mobile, mungkin tombol bayarnya ketutupan.</label>
-                    <label><input type="radio" name="Q13" value="c">c. Cek data alur pembayaran buat tahu di step mana mereka berhenti.</label>
-                    <label><input type="radio" name="Q13" value="d">d. Riset alasan user batal bayar dan hitung kerugian bisnisnya.</label>
-                </div>
+
+        <div class="soal">
+            <p>13. Data nunjukin 60% user batal pas mau bayar kursus. Menurut kamu langkah paling tepat pertama kali apa?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q13" value="a">a. Optimasi kecepatan halaman biar nggak lemot.</label>
+                <label><input type="radio" name="Q13" value="b">b. Tes tampilan di mobile, mungkin tombol bayarnya ketutupan.</label>
+                <label><input type="radio" name="Q13" value="c">c. Cek data alur pembayaran buat tahu di step mana mereka berhenti.</label>
+                <label><input type="radio" name="Q13" value="d">d. Riset alasan user batal bayar dan hitung kerugian bisnisnya.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>14. Fitur baru yang kamu buat bisa ningkatin engagement user, tapi biaya server-nya tinggi banget. Apa yang bakal kamu lakuin?</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q14" value="a">a. Tetap jalanin, yang penting fiturnya keren.</label>
-                    <label><input type="radio" name="Q14" value="b">b. Cari solusi teknis biar biaya server bisa ditekan.</label>
-                    <label><input type="radio" name="Q14" value="c">c. Hitung dulu perbandingan cost dan manfaatnya buat bisnis.</label>
-                    <label><input type="radio" name="Q14" value="d">d. Tanya user apakah fitur ini beneran mereka butuhin.</label>
-                </div>
+
+        <div class="soal">
+            <p>14. Fitur baru yang kamu buat bisa ningkatin engagement user, tapi biaya server-nya tinggi banget. Apa yang bakal kamu lakuin?</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q14" value="a">a. Tetap jalanin, yang penting fiturnya keren.</label>
+                <label><input type="radio" name="Q14" value="b">b. Cari solusi teknis biar biaya server bisa ditekan.</label>
+                <label><input type="radio" name="Q14" value="c">c. Hitung dulu perbandingan cost dan manfaatnya buat bisnis.</label>
+                <label><input type="radio" name="Q14" value="d">d. Tanya user apakah fitur ini beneran mereka butuhin.</label>
             </div>
+        </div>
 
-            <div class="soal">
-                <p>15. Kamu paling puas kalau hasil kerja kamu...</p>
-                <div class="pilihan">
-                    <label><input type="radio" name="Q15" value="a">a. Berfungsi lancar tanpa error.</label>
-                    <label><input type="radio" name="Q15" value="b">b. Bisa dipakai di mana aja dengan performa bagus.</label>
-                    <label><input type="radio" name="Q15" value="c">c. Ngasih insight yang bisa bantu ambil keputusan.</label>
-                    <label><input type="radio" name="Q15" value="d">d. Dipakai banyak orang dan bener-bener ngebantu mereka.</label>
-                </div>
+
+        <div class="soal">
+            <p>15. Kamu paling puas kalau hasil kerja kamu...</p>
+            <div class="pilihan">
+                <label><input type="radio" name="Q15" value="a">a. Berfungsi lancar tanpa error.</label>
+                <label><input type="radio" name="Q15" value="b">b. Bisa dipakai di mana aja dengan performa bagus.</label>
+                <label><input type="radio" name="Q15" value="c">c. Ngasih insight yang bisa bantu ambil keputusan.</label>
+                <label><input type="radio" name="Q15" value="d">d. Dipakai banyak orang dan bener-bener ngerasa nyaman.</label>
             </div>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+        </div>
 
-<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<script src="/static/js/scripts.js"></script>
 </body>
 </html>
-

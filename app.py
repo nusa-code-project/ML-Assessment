@@ -1,53 +1,53 @@
-from flask import Flask, render_template,request,jsonify
-import joblib
+from flask import Flask, render_template, request
 import numpy as np
+import joblib
 
 app = Flask(__name__)
 
+# Load model
 model = joblib.load('data_nusaCode.pkl')
 
-score_mapping = {
-    'a' : 1.25,
-    'b' : 1.5,
-    'c' : 1.75,
-    'd' : 1.00
- }
+
+score_mapping = {'a': 1.25, 'b': 1.5, 'c': 1.75, 'd': 1.0}
+
+
+learning_paths = ['Web Development', 'Mobile Development', 'Data & AI', 'Product & UX']
+
 
 @app.route('/')
-def home() :
+def home():
     return render_template('question.html')
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    data = request.form
 
-    try :
-        jawaban = []
-        for i in range(1,16):
-            nilai = request.form.get(f'Q{i}')
-            if nilai not in score_mapping :
-                return jsonify({"error": f"Anda belum mengisi pilihan Nomor {i}"})
-            jawaban.append(score_mapping[nilai])
 
-        nilai_x = np.array(jawaban).reshape(1,-1)
+    input_vector = []
+    for key in sorted(data.keys()):
+        ans = data[key]
+        input_vector.append(score_mapping.get(ans, 0))
 
-        prediction = model.predict_proba(nilai_x)[0]
-        classes = model.classes_
+    input_vector = np.array(input_vector).reshape(1, -1)
 
-        sorted_indices = np.argsort(prediction)[::-1]
-        tiga_terbaik = [(classes[i], round(float(prediction[i]))) for i in sorted_indices[:3]]
 
-        learning_path = tiga_terbaik[0][0]
-        return render_template(
-            'result.html',
-            learning_path=learning_path,
-            tiga_terbaik = tiga_terbaik
-        )
+    if hasattr(model, "predict_proba"):
+        probs = model.predict_proba(input_vector)[0]
+    else:
 
-    except Exception as e :
-        return render_template(
-            'result.html',
-            learning_path=f"Terjadi kesalahan: {str(e)}"
-        )
+        pred = model.predict(input_vector)[0]
+        probs = np.zeros(len(learning_paths))
+        probs[int(pred)] = 1.0
 
-if __name__ == "__main__" :
+
+    top_indices = probs.argsort()[::-1][:3]
+    tiga_terbaik = []
+    for idx in top_indices:
+        tiga_terbaik.append((learning_paths[idx], f"{probs[idx]*100:.2f}"))
+
+    return render_template('result.html', tiga_terbaik=tiga_terbaik)
+
+
+if __name__ == '__main__':
     app.run(debug=True)
