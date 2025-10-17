@@ -11,10 +11,8 @@ class NusaCode:
     def __init__(self, model_path="model_nusaCode.pkl"):
         self.model = joblib.load(model_path)
 
-        # Mapping skor jawaban
         self.score_mapping = {"a": 1.25, "b": 1.5, "c": 1.75, "d": 1.0}
 
-        # Pilihan learning path
         self.learning_paths = [
             "Web Development",
             "Mobile Development",
