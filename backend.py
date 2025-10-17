@@ -1,13 +1,13 @@
-from flask import Flask, request, jsonify
 import numpy as np
 import pandas as pd
 import joblib
 
 class NusaCode:
     def __init__(self, model_path='model_nusaCode.pkl'):
-        self.app = Flask(__name__)
+        # Load model
         self.model = joblib.load(model_path)
 
+        # Mapping skor jawaban
         self.score_mapping = {
             'a': 1.25,
             'b': 1.5,
@@ -15,6 +15,7 @@ class NusaCode:
             'd': 1.0
         }
 
+        # Pilihan learning path
         self.learning_paths = [
             'Web Development',
             'Mobile Development',
@@ -22,45 +23,35 @@ class NusaCode:
             'Product & UX'
         ]
 
-        # Register routes
-        self.register_routes()
-
-    def register_routes(self):
-        """Daftarkan semua route Flask"""
-        self.app.add_url_rule('/', 'home', self.home)
-        self.app.add_url_rule('/submit', 'submit', self.submit, methods=['POST'])
-
-    def home(self):
-        """Menampilkan status server"""
-        return jsonify({'status': 'success', 'message': 'Server NusaCode berjalan.'})
-
-    def submit(self):
-        """Memproses form kuis dan memberikan rekomendasi"""
-        data = request.json  # Gunakan JSON dari front-end
+    def predict(self, jawaban: dict):
+        """
+        Method inti yang mengembalikan rekomendasi.
+        jawaban: dict {'Q1': 'a', 'Q2': 'b', ..., 'Q15': 'c'}
+        return: list 3 learning path terbaik dengan probabilitas
+        """
         input_vector = []
         missing = []
 
+        # Validasi jawaban dan konversi ke skor
         for i in range(1, 16):
-            ans = data.get(f'Q{i}')
+            ans = jawaban.get(f'Q{i}')
             if not ans:
                 missing.append(i)
             else:
                 input_vector.append(self.score_mapping.get(ans, 0))
 
         if missing:
-            return jsonify({
-                'status': 'error',
-                'missing': missing,
-                'message': f'Jawaban soal nomor {", ".join(map(str, missing))} belum diisi!'
-            })
+            raise ValueError(f"Jawaban soal nomor {', '.join(map(str, missing))} belum diisi!")
 
         input_vector = np.array(input_vector).reshape(1, -1)
 
+        # DataFrame jika model membutuhkan nama kolom
         if hasattr(self.model, "feature_names_in_"):
             df_input = pd.DataFrame(input_vector, columns=self.model.feature_names_in_)
         else:
             df_input = pd.DataFrame(input_vector)
 
+        # Prediksi probabilitas
         if hasattr(self.model, "predict_proba"):
             probs = self.model.predict_proba(df_input)[0]
         else:
@@ -75,15 +66,4 @@ class NusaCode:
             for idx in top_indices
         ]
 
-        return jsonify({
-            'status': 'success',
-            'recommendations': tiga_terbaik
-        })
-
-    def run(self, debug=True, port=5000):
-        self.app.run(debug=debug, port=port)
-
-# --- Jalankan server ---
-if __name__ == '__main__':
-    app_instance = NusaCode()
-    app_instance.run()
+        return tiga_terbaik
